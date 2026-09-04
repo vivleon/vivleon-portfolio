@@ -871,7 +871,10 @@ ul {
   color: var(--color-muted);
 }
 
-.contact-copy .text-link {
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
   margin-top: 1.5rem;
 }
 

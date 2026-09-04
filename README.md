@@ -6,6 +6,7 @@
 
 - Website: <https://vivleon.github.io/vivleon-portfolio/>
 - Repository: <https://github.com/vivleon/vivleon-portfolio>
+- LinkedIn: <https://www.linkedin.com/in/vivranium/>
 
 ## 주요 기능
 

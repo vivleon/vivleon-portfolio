@@ -34,6 +34,7 @@ assert.match(html, /css\/style\.css/);
 assert.match(html, /js\/script\.js" defer/);
 assert.match(html, /action="https:\/\/formspree\.io\/f\/xoeqldwy"/);
 assert.match(html, /method="POST"/);
+assert.match(html, /https:\/\/www\.linkedin\.com\/in\/vivranium\//);
 assert.doesNotMatch(html, /\sstyle=/i);
 assert.doesNotMatch(html, /\sonclick=/i);
 
