@@ -32,6 +32,8 @@ requiredFiles.forEach((file) => assert.ok(statSync(join(root, file)), `${file} í
 
 assert.match(html, /css\/style\.css/);
 assert.match(html, /js\/script\.js" defer/);
+assert.match(html, /action="https:\/\/formspree\.io\/f\/xoeqldwy"/);
+assert.match(html, /method="POST"/);
 assert.doesNotMatch(html, /\sstyle=/i);
 assert.doesNotMatch(html, /\sonclick=/i);
 

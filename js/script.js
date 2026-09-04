@@ -343,14 +343,14 @@ const submitContactForm = async (event) => {
     return;
   }
 
-  const endpoint = elements.contactForm.dataset.endpoint;
+  const endpoint = elements.contactForm.getAttribute('action')?.trim();
   setSubmitting(true);
 
   try {
     if (!endpoint) {
       await new Promise((resolve) => window.setTimeout(resolve, 650));
       elements.formResult.classList.add('success');
-      elements.formResult.textContent = '입력이 확인되었습니다. 현재 데모 모드에서는 외부로 전송되지 않습니다.';
+      elements.formResult.textContent = '전송 주소가 설정되지 않았습니다. 잠시 후 다시 시도해 주세요.';
       return;
     }
 
