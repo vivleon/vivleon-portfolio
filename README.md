@@ -10,7 +10,8 @@
 
 ## 주요 기능
 
-- Hero, About, Skills, Projects, Contact, Footer 시맨틱 섹션
+- Hero, About, Experience, Skills, Projects, Contact, Footer 시맨틱 섹션
+- LinkedIn 이력을 바탕으로 구성한 경력 타임라인과 학력 정보
 - 모바일 퍼스트 반응형 레이아웃: 768px 태블릿, 1024px 데스크톱
 - 모바일 햄버거 메뉴와 앵커 부드러운 스크롤
 - 라이트/다크 모드 전환 및 `localStorage` 설정 유지

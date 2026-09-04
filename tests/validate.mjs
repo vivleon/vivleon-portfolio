@@ -26,7 +26,7 @@ requiredFiles.forEach((file) => assert.ok(statSync(join(root, file)), `${file} �
   assert.match(html, new RegExp(`<${tag}[\\s>]`), `${tag} 시맨틱 태그가 필요합니다.`);
 });
 
-['home', 'about', 'skills', 'projects', 'contact'].forEach((id) => {
+['home', 'about', 'experience', 'skills', 'projects', 'contact'].forEach((id) => {
   assert.match(html, new RegExp(`id="${id}"`), `${id} 섹션이 필요합니다.`);
 });
 
@@ -35,6 +35,9 @@ assert.match(html, /js\/script\.js" defer/);
 assert.match(html, /action="https:\/\/formspree\.io\/f\/xoeqldwy"/);
 assert.match(html, /method="POST"/);
 assert.match(html, /https:\/\/www\.linkedin\.com\/in\/vivranium\//);
+assert.match(html, /Chief Strategy Officer/);
+assert.match(html, /Finance Accountant/);
+assert.match(html, /Bachelor’s degree · Economics/);
 assert.doesNotMatch(html, /\sstyle=/i);
 assert.doesNotMatch(html, /\sonclick=/i);
 

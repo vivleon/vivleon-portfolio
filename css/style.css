@@ -577,6 +577,84 @@ ul {
   font-size: 0.9rem;
 }
 
+.experience-heading {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.experience-heading > p {
+  max-width: 34rem;
+  color: var(--color-muted);
+}
+
+.timeline {
+  margin-top: 3rem;
+  border-top: 1px solid var(--color-line);
+  list-style: none;
+}
+
+.timeline-item {
+  display: grid;
+  gap: 0.65rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.timeline-item time,
+.timeline-location,
+.education-grid span {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline-company {
+  color: var(--color-accent);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline-item h3 {
+  margin-top: 0.2rem;
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  letter-spacing: -0.04em;
+}
+
+.education-block {
+  margin-top: 4rem;
+}
+
+.education-grid {
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-line);
+}
+
+.education-grid article {
+  min-width: 0;
+  padding: 1.5rem;
+  background: var(--color-card);
+}
+
+.education-grid h3 {
+  margin-top: 2rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.035em;
+}
+
+.education-grid p {
+  margin-top: 0.45rem;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
 .skills-heading,
 .projects-heading {
   display: grid;
@@ -1113,6 +1191,29 @@ ul {
 
   .principles {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .experience-heading {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+
+  .experience-heading > p {
+    max-width: 22rem;
+  }
+
+  .timeline-item {
+    grid-template-columns: minmax(9rem, 0.7fr) minmax(0, 1.5fr) minmax(8rem, 0.65fr);
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .timeline-location {
+    text-align: right;
+  }
+
+  .education-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .skills-heading,

@@ -33,9 +33,9 @@ const projectState = {
 };
 
 const typingPhrases = [
-  'AI를 배우고 있습니다.',
-  '비즈니스를 이해합니다.',
-  '아이디어를 제품으로 연결합니다.'
+  '전략과 기술을 연결합니다.',
+  '글로벌 비즈니스를 이해합니다.',
+  '아이디어를 제품으로 만듭니다.'
 ];
 
 const readSavedTheme = () => {
