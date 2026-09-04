@@ -20,7 +20,7 @@
 - GitHub API 프로젝트 로딩/성공/에러/빈 상태 및 재시도
 - GitHub 저장소 사용 언어별 프로젝트 필터
 - Hero 타이핑 애니메이션
-- 문의 폼 실시간 유효성 검사와 비동기 전송 처리
+- 문의 폼 실시간 유효성 검사와 Formspree 비동기 전송 경로
 - 모션 감소 환경(`prefers-reduced-motion`) 지원
 
 ## 사용 기술
@@ -29,7 +29,7 @@
 - CSS3: Custom Properties, Flexbox, Grid, Media Query, Transition
 - JavaScript ES6+: DOM API, Fetch, async/await, 구조분해 할당, 배열 메서드
 - GitHub REST API
-- Formspree 비동기 폼 전송
+- Formspree 비동기 폼 전송 연동 구조
 - GitHub Pages
 
 ## 폴더 구조
@@ -98,8 +98,10 @@ Flexbox는 한 방향으로 정렬하는 데 적합하므로 로고와 메뉴를
 
 - 프로젝트 필터링: GitHub 저장소의 `language` 값을 기준으로 동적 버튼 생성
 - 타이핑 효과: 여러 소개 문구를 글자 단위로 입력하고 지우는 애니메이션
-- 폼 실제 전송: Formspree 엔드포인트로 `FormData`를 비동기 전송
+- 폼 실제 전송: Formspree 엔드포인트를 연결하면 `FormData`를 비동기 전송
 - 시스템 다크 모드: 저장된 사용자 선택이 없을 때 운영체제 설정을 초기 테마로 사용
+
+> Formspree 주소의 `xxxxxxxx`는 예시가 아니라 Formspree에서 폼을 만든 뒤 발급되는 고유 ID입니다. 현재 공개 저장소에는 다른 사람의 수신 주소로 연결되는 ID를 임의로 넣지 않았으며, `index.html`의 `data-endpoint`에 발급받은 전체 주소를 넣으면 실제 전송이 활성화됩니다.
 
 ## 스크린샷
 

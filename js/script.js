@@ -350,7 +350,7 @@ const submitContactForm = async (event) => {
     if (!endpoint) {
       await new Promise((resolve) => window.setTimeout(resolve, 650));
       elements.formResult.classList.add('success');
-      elements.formResult.textContent = '입력이 확인되었습니다. 실제 전송 주소 연결을 기다리고 있습니다.';
+      elements.formResult.textContent = '입력이 확인되었습니다. 현재 데모 모드에서는 외부로 전송되지 않습니다.';
       return;
     }
 
