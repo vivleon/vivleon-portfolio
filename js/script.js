@@ -1,5 +1,6 @@
 'use strict';
 
+// [평가: API 연동] GitHub 사용자와 스크롤/등장 애니메이션 기준값을 상수로 관리한다.
 const GITHUB_USERNAME = 'vivleon';
 const GITHUB_REPOS_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
 const THEME_KEY = 'vivleon-theme';
@@ -7,6 +8,7 @@ const SCROLL_HEADER_THRESHOLD = 60;
 const SCROLL_TOP_THRESHOLD = 300;
 const OBSERVER_THRESHOLD = 0.2;
 
+// [평가: DOM 선택] 화면에서 반복해서 사용할 요소를 시작 시 한 번 선택한다.
 const elements = {
   root: document.documentElement,
   body: document.body,
@@ -25,6 +27,8 @@ const elements = {
   year: document.querySelector('#current-year')
 };
 
+// [평가: 상태 관리] 프로젝트 기능에 필요한 상태를 한 객체에서 관리한다.
+// 상태가 바뀌면 renderProjects()가 현재 상태에 맞춰 화면을 다시 그린다.
 const projectState = {
   status: 'idle',
   projects: [],
@@ -38,6 +42,7 @@ const typingPhrases = [
   '아이디어를 제품으로 만듭니다.'
 ];
 
+// [보너스: 시스템 다크 모드] 저장된 사용자 선택이 없을 때 운영체제 설정을 사용한다.
 const readSavedTheme = () => {
   try {
     return localStorage.getItem(THEME_KEY);
@@ -55,6 +60,7 @@ const saveTheme = (theme) => {
   }
 };
 
+// [평가: 이벤트 → 상태 → 렌더링] 테마 상태를 data-theme과 저장소에 반영한다.
 const applyTheme = (theme, persist = false) => {
   const isDark = theme === 'dark';
   elements.root.dataset.theme = theme;
@@ -75,6 +81,7 @@ const initializeTheme = () => {
   applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
 };
 
+// [평가: 인터랙션] 모바일 메뉴의 상태와 접근성 속성을 함께 초기화한다.
 const closeMenu = () => {
   elements.navLinks.classList.remove('active');
   elements.menuToggle.classList.remove('active');
@@ -83,6 +90,7 @@ const closeMenu = () => {
   elements.menuToggle.setAttribute('aria-label', '메뉴 열기');
 };
 
+// classList.toggle()로 햄버거 메뉴를 열고 닫는다.
 const toggleMenu = () => {
   const isOpen = elements.navLinks.classList.toggle('active');
   elements.menuToggle.classList.toggle('active', isOpen);
@@ -91,6 +99,7 @@ const toggleMenu = () => {
   elements.menuToggle.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
 };
 
+// 앵커 기본 이동을 막고 scrollIntoView()로 부드럽게 이동한다.
 const handleAnchorClick = (event) => {
   const anchor = event.currentTarget;
   const targetId = anchor.getAttribute('href');
@@ -109,12 +118,14 @@ const handleAnchorClick = (event) => {
   closeMenu();
 };
 
+// 60px 이후 헤더를 변경하고, 300px 이후 맨 위로 가기 버튼을 표시한다.
 const handleScroll = () => {
   const scrollY = window.scrollY;
   elements.header.classList.toggle('scrolled', scrollY >= SCROLL_HEADER_THRESHOLD);
   elements.scrollTop.classList.toggle('visible', scrollY >= SCROLL_TOP_THRESHOLD);
 };
 
+// IntersectionObserver로 요소가 화면에 들어올 때 한 번만 등장 애니메이션을 실행한다.
 const initializeRevealAnimation = () => {
   const revealElements = document.querySelectorAll('.reveal');
 
@@ -174,6 +185,7 @@ const formatDate = (dateValue) => new Intl.DateTimeFormat('ko-KR', {
   month: 'short'
 }).format(new Date(dateValue));
 
+// [평가: API 상태 UI] loading, error, empty 상태별 안내 화면을 만든다.
 const renderProjectStatus = () => {
   const statusViews = {
     loading: `
@@ -198,10 +210,12 @@ const renderProjectStatus = () => {
   elements.projectStatus.innerHTML = statusViews[projectState.status] || '';
 };
 
+// filter()로 현재 선택한 언어에 맞는 프로젝트만 남긴다.
 const getFilteredProjects = () => projectState.projects.filter(({ language }) => (
   projectState.filter === 'All' || (language || 'Other') === projectState.filter
 ));
 
+// map()으로 GitHub 응답에서 언어 필터 버튼을 동적으로 생성한다.
 const renderProjectFilters = () => {
   const languages = [...new Set(projectState.projects.map(({ language }) => language || 'Other'))]
     .sort((first, second) => first.localeCompare(second));
@@ -217,6 +231,7 @@ const renderProjectFilters = () => {
   `).join('');
 };
 
+// [평가: 상태 → 렌더링] 프로젝트 상태와 필터 결과를 DOM에 반영한다.
 const renderProjects = () => {
   if (projectState.status !== 'success') {
     elements.projectGrid.innerHTML = '';
@@ -241,6 +256,7 @@ const renderProjects = () => {
   }
 
   elements.projectStatus.innerHTML = '';
+  // map()과 템플릿 리터럴로 저장소 객체를 카드 HTML로 변환한다.
   elements.projectGrid.innerHTML = visibleProjects.map((project, index) => {
     const { name, description, html_url: projectUrl, language, stargazers_count: stars, updated_at: updatedAt } = project;
     return `
@@ -261,6 +277,7 @@ const renderProjects = () => {
   }).join('');
 };
 
+// [평가: 비동기 처리] API 요청 전 loading, 성공/빈 결과, 실패 상태를 순서대로 관리한다.
 const loadProjects = async () => {
   projectState.status = 'loading';
   projectState.error = '';
@@ -291,6 +308,7 @@ const loadProjects = async () => {
   renderProjects();
 };
 
+// 필터 클릭 → filter 상태 변경 → 프로젝트 목록 재렌더링 흐름이다.
 const handleProjectFilter = (event) => {
   const button = event.target.closest('[data-language]');
   if (!button) {
@@ -308,6 +326,7 @@ const validationMessages = {
   message: '메시지를 입력해 주세요.'
 };
 
+// [평가: 폼 UX] 입력 이벤트와 제출 시 필수값/이메일 형식을 검증한다.
 const validateField = (field) => {
   const value = field.value.trim();
   const isEmail = field.type === 'email';
@@ -328,6 +347,7 @@ const setSubmitting = (isSubmitting) => {
   submitLabel.textContent = isSubmitting ? '전송 중…' : '메시지 보내기';
 };
 
+// 기본 제출을 막고 검증을 통과한 FormData를 Formspree로 비동기 전송한다.
 const submitContactForm = async (event) => {
   event.preventDefault();
   const fields = [...elements.contactForm.querySelectorAll('input:not([type="hidden"]), textarea')];
@@ -379,6 +399,7 @@ const submitContactForm = async (event) => {
   }
 };
 
+// HTML inline onclick 대신 모든 사용자 이벤트를 addEventListener로 연결한다.
 const initializeEvents = () => {
   elements.menuToggle.addEventListener('click', toggleMenu);
   elements.themeToggle.addEventListener('click', () => {
